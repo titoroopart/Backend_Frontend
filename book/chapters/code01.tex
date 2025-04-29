@@ -1,0 +1,96 @@
+\section{[Code01]Instalación de Java JDK y Gradle}
+\subsection{Instalación de Java JDK Linux}
+\subsubsection{Instalación de Java JDK}
+Para instalar java jdk en linux se debe seguir los siguientes pasos:
+Instalamos Java JDK
+\enablenumbering
+\begin{lstlisting}[language=bash]
+sudo apt update
+sudo apt install default-jdk
+\end{lstlisting}
+\subsubsection{Configuramos las variables de entorno}
+Primero buscamos la ruta exacta de tu JDK
+
+\begin{lstlisting}[language=bash]
+ls /usr/lib/jvm/
+\end{lstlisting}
+Busca el folder exacto de tu JDK (ej: jdk-21-amd64) y agrega la ruta a bashrc con los siguientes comandos.
+\begin{lstlisting}[language=bash]
+echo 'export JAVA_HOME=/usr/lib/jvm/jdk-21-amd64/' >> ~/.bashrc
+echo 'export PATH=$JAVA_HOME/bin:$PATH' >> ~/.bashrc
+source ~/.bashrc
+\end{lstlisting}
+Verificar instalación de Java
+\begin{lstlisting}[language=bash]
+java -version
+javac -version
+\end{lstlisting}
+
+\subsubsection{Instalar Gradle}
+Con bash
+\begin{lstlisting}[language=bash]
+curl -s "https://get.sdkman.io" | bash
+source "\$HOME/.sdkman/bin/sdkman-init.sh"
+
+sdk install gradle
+
+sdk list
+
+sdk use gradle 8.14
+exit
+\end{lstlisting}
+Correr esto solo si usas fishshell
+\begin{lstlisting}[language=bash]
+fisher install reitzig/sdkman-for-fish
+\end{lstlisting}
+
+Crear una proyecto Gradle
+\begin{lstlisting}[language=bash]
+mkdir mi-proyecto
+cd mi-proyecto
+gradle init
+\end{lstlisting}
+Creamos el proyecto java aplicación y proyecto simple con groovy
+Dentro de mi-proyecto deberías ver los siguientes archivos\\
+\begin{enumerate}
+  \item build.gradle: Archivo de configuración principal de gradle
+  \item settings.gradle: Archivo donde se define la configuración del proyecto
+  \item src/ Contiene el código fuente y los tests
+\end{enumerate}
+
+\subsection{Instalación de Java JDK y Gradle en Windows}
+\subsubsection{Descarga e Instala Java JDK}
+Descarga Java de su pagina oficial buscando java jdk en google, \url{https://www.oracle.com/java/technologies/downloads/}  para instalar Java JDK Ejecuta el instalador y sigue los pasos (usa la ruta por defecto, ej: 
+\begin{lstlisting}[language=bash]
+C:\Program Files\Java\jdk-21).
+\end{lstlisting}
+\subsubsection{Configurar Variables de Entorno} 
+\begin{enumerate}
+  \item Abre Editar variables de entorno del sistema (busca en el menú Inicio).
+  \item En Variables del sistema, haz clic en Nueva y agrega: Nombre: JAVA\_HOME
+\\
+\begin{lstlisting}[language=bash]
+Valor: C:\Program Files\Java\jdk-21 \$(ajusta la version).
+\end{lstlisting}
+\item Edita la variable Path y agrega:
+\begin{lstlisting}[language=bash]
+\%JAVA\_HOME\%\bin
+\end{lstlisting}
+\end{enumerate}
+Verificar Java abriendo CMD y ejecuta:
+\begin{lstlisting}[language=bash]
+java -version
+javac -version
+\end{lstlisting}
+(Debe mostrar la versión instalada).
+\\
+\subsubsection{Instalar Gradle}
+ Descarga Gradle desde \url{https://gradle.org/install/#manually} (versión "Binary-only"). Extrae el ZIP en la siguiente ruta crear carpeta Gradle en el disco C:
+\begin{lstlisting}[language=bash]
+ C:\Gradle\gradle-8.14
+\end{lstlisting}
+Configurar Variables de Entorno para Gradle\\
+En "Variables del sistema", Edita Path y agrega:
+\begin{lstlisting}[language=bash]
+C:\Gradle\gradle-8.14\bin
+\end{lstlisting}

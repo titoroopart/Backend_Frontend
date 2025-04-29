@@ -1,0 +1,36 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{listing-numbers}[2024/06/20 Numeración para listings]
+
+\RequirePackage{listings}
+\RequirePackage{xcolor}
+
+% Configuración segura para Bash (versión corregida)
+\lstdefinestyle{safebash}{
+    alsoletter={-,\,/,=,~,*},
+    sensitive=false,
+    literate=
+        {/}{{\textnormal{/}}}1
+        {~}{{\textasciitilde}}1
+        {*}{{*}}1
+        {\$}{\$}1,  % Corrección clave: sin llaves adicionales
+    basicstyle=\ttfamily\small,
+    breaklines=true
+}
+
+% Estilo numerado
+\lstdefinestyle{numberedstyle}{
+    style=safebash,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    numbersep=8pt,
+    xleftmargin=18pt,
+    framexleftmargin=14pt,
+    postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+    frame=single,
+    rulecolor=\color{gray!30}
+}
+
+\newcommand{\enablenumbering}{\lstset{style=numberedstyle}}
+\newcommand{\disablenumbering}{\lstset{numbers=none}}
+
+\endinput
