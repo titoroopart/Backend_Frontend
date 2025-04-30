@@ -1,0 +1,255 @@
+% code-styles.sty
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{code-styles}[2023/12/01 Estilos para múltiples lenguajes]
+
+\RequirePackage{xcolor}
+\RequirePackage{listings}
+
+% ===== Colores base compartidos =====
+\definecolor{codebg}{rgb}{0.98,0.98,0.97}
+\definecolor{comment}{rgb}{0.0,0.5,0.0}
+\definecolor{keyword}{rgb}{0.13,0.13,0.81}
+\definecolor{string}{rgb}{0.58,0.0,0.82}
+\definecolor{promptchar}{rgb}{0.58,0,0.82}  % Morado para prompts
+
+% ===== Estilo común base =====
+\lstdefinestyle{basestyle}{
+    backgroundcolor=\color{codebg},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=true,
+    breaklines=true,
+    captionpos=b,
+    frame=lines,
+    framesep=4pt,
+    rulecolor=\color{gray!30},
+    xleftmargin=12pt,
+    xrightmargin=12pt,
+    keepspaces=true,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4,
+    extendedchars=true,
+    inputencoding=utf8,
+    columns=fullflexible
+}
+% ===== Java (fully corrected version) =====
+\lstdefinelanguage{java}{
+	style=basestyle,
+	morekeywords={
+		abstract, assert, boolean, break, byte, case, catch, char, class, const,
+		continue, default, do, double, else, enum, extends, final, finally, float,
+		for, goto, if, implements, import, instanceof, int, interface, long, native,
+		new, package, private, protected, public, return, short, static, strictfp,
+		super, switch, synchronized, this, throw, throws, transient, try, void,
+		volatile, while, var, record, sealed, non-sealed, permits, yield
+	},
+	keywordstyle=\color{keyword}\bfseries,
+	commentstyle=\color{comment}\itshape,
+	stringstyle=\color{string},
+	sensitive=true,
+	literate=
+	{á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+	{Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+	{ñ}{{\~n}}1 {Ñ}{{\~N}}1
+	{¡}{{!`}}1  % Added for Spanish exclamation
+	{¿}{{?`}}1  % Added for Spanish question
+	{»}{{\guillemotright}}1
+	{«}{{\guillemotleft}}1,
+	inputencoding=utf8,
+	extendedchars=true,
+	upquote=true  % Ensures straight quotes
+}
+% ===== Python (fully corrected version) =====
+\lstdefinelanguage{python}{
+	style=basestyle,
+	morekeywords={
+		False, None, True, and, as, assert, async, await, break, class, 
+		continue, def, del, elif, else, except, finally, for, from, global, 
+		if, import, in, is, lambda, nonlocal, not, or, pass, raise, 
+		return, try, while, with, yield,
+		% Built-in functions
+		abs, all, any, bin, bool, chr, dict, dir, enumerate, eval, filter, 
+		float, format, getattr, hasattr, input, int, len, list, map, max, 
+		min, next, open, print, range, repr, reversed, round, set, sorted, 
+		str, sum, tuple, type, zip,
+		% Special Python terms
+		self, cls, super, __init__, __name__, __main__
+	},
+	morekeywords=[2]{  % Standard library modules
+		os, sys, re, math, random, datetime, json, requests, numpy, pandas,
+		matplotlib, seaborn, django, flask, argparse, collections, itertools
+	},
+	keywordstyle=\color{magenta}\bfseries,
+	keywordstyle=[2]=\color{blue!70!black},
+	commentstyle=\color{green!50!black}\itshape,
+	stringstyle=\color{orange},
+	sensitive=true,
+	morestring=[b]',
+	morestring=[b]",
+	morestring=[b]''',
+	morestring=[b]""",
+	literate=
+	{á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+	{Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+	{ñ}{{\~n}}1 {Ñ}{{\~N}}1
+	{¡}{{!`}}1  % Spanish exclamation
+	{¿}{{?`}}1  % Spanish question
+	{»}{{\guillemotright}}1
+	{«}{{\guillemotleft}}1
+	{…}{{\dots}}1  % Ellipsis
+	{→}{{$\rightarrow$}}1  % Arrow
+	{λ}{{$\lambda$}}1,  % Lambda
+	inputencoding=utf8,
+	extendedchars=true,
+	upquote=true,
+	showstringspaces=false,
+	tabsize=4,
+	emph={self,cls},  % Special variables
+	emphstyle=\color{red!80!black}
+}
+
+% ===== SQL (versión completa) =====
+\lstdefinelanguage{sql}{
+	style=basestyle,
+	morekeywords={
+		% SQL Standard
+		SELECT, FROM, WHERE, GROUP, BY, HAVING, ORDER, LIMIT, OFFSET,
+		JOIN, INNER, LEFT, RIGHT, FULL, OUTER, ON, AS, WITH,
+		UNION, ALL, INTERSECT, EXCEPT, DISTINCT,
+		INSERT, INTO, VALUES, UPDATE, SET, DELETE,
+		CREATE, TABLE, VIEW, INDEX, ALTER, DROP, TRUNCATE,
+		PRIMARY, KEY, FOREIGN, REFERENCES, CONSTRAINT, CHECK,
+		AND, OR, NOT, IN, LIKE, BETWEEN, IS, NULL,
+		% Functions
+		COUNT, SUM, AVG, MIN, MAX, COALESCE, NULLIF, CAST, CASE, WHEN, THEN, ELSE, END,
+		% Data Types
+		INT, INTEGER, SMALLINT, BIGINT, DECIMAL, NUMERIC, REAL, DOUBLE, FLOAT,
+		CHAR, VARCHAR, TEXT, DATE, TIME, TIMESTAMP, INTERVAL, BOOLEAN, JSON,
+		% Transactions
+		BEGIN, COMMIT, ROLLBACK, SAVEPOINT, TRANSACTION,
+		% MySQL Extras
+		ENGINE, AUTO_INCREMENT, DEFAULT, CHARACTER, SET, COLLATE,
+		% PostgreSQL Extras
+		SERIAL, BIGSERIAL, RETURNING, ILIKE, SIMILAR, TO, DISTINCT,
+		% Oracle Extras
+		ROWNUM, NVL, SYSDATE, DUAL, VARCHAR2
+	},
+	morekeywords=[2]{  % Functions
+		CONCAT, SUBSTRING, TRIM, UPPER, LOWER, EXTRACT, DATE_TRUNC,
+		TO_CHAR, TO_DATE, TO_NUMBER, FORMAT, JSON_EXTRACT
+	},
+	keywordstyle=\color{blue}\bfseries,
+	keywordstyle=[2]=\color{purple!80!black},
+	commentstyle=\color{green!50!black}\itshape,
+	stringstyle=\color{orange},
+	sensitive=false,  % SQL no es case-sensitive
+	morecomment=[l]{--},  % Comentarios de línea
+	morecomment=[s]{/*}{*/},  % Comentarios de bloque
+	morestring=[b]',
+    literate=
+	{á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+	{Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+	{ñ}{{\~n}}1 {Ñ}{{\~N}}1
+	{¡}{{!`}}1
+	{¿}{{?`}}1
+	{»}{{\guillemotright}}1
+	{«}{{\guillemotleft}}1
+	{€}{{\euro}}1  % Símbolo de euro añadido
+	{||}{{$\Vert$}}2,
+	inputencoding=utf8,
+	extendedchars=true,
+	upquote=true,
+	texcl=true  % Interpreta comentarios como LaTeX
+}
+
+% ===== Bash =====
+\lstdefinelanguage{bash}{
+	style=basestyle,
+	alsoletter={-,\,/,=,~,*,\$}, % Caracteres permitidos en comandos
+	morekeywords={sudo,grep,awk,sed,chmod,find,curl,ls,java,javac,python,fisher,sdk,mkdir,cd,gradle},
+	keywordstyle=\color{green!50!black}\bfseries,
+	commentstyle=\color{gray}\itshape,
+	stringstyle=\color{red!70!black},
+	morecomment=[l]{\#},       % Comentarios de línea
+	morecomment=[n]{\$}{},    % Prompt $
+	morecomment=[n]{\#}{},    % Prompt root
+	morestring=[b]",
+	morestring=[b]',
+	literate=
+	{á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+	{Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+	{ñ}{{\~n}}1 {Ñ}{{\~N}}1
+	{>}{{\textcolor{promptchar}{>}}}1
+	{\$}{{\textcolor{promptchar}{\$}}}1
+	{*}{{*}}1
+	{/}{{/}}1
+	{~}{{\textasciitilde}}1
+}
+
+% ===== JavaScript (versión completa) =====
+\lstdefinelanguage{javascript}{
+	style=basestyle,
+	morekeywords={
+		break, case, catch, class, const, continue, debugger, default,
+		delete, do, else, export, extends, finally, for, function, if,
+		import, in, instanceof, let, new, return, super, switch, this,
+		throw, try, typeof, var, void, while, with, yield,
+		% ES6+
+		async, await, static, get, set, from, of,
+		% Valores
+		true, false, null, undefined, NaN, Infinity,
+		% Consola
+		console, log, warn, error, info, table,
+		% Tipos
+		String, Number, Boolean, Array, Object, Promise, JSON, Date,
+		% Funciones clave
+		setTimeout, setInterval, fetch, alert, prompt, confirm
+	},
+	morekeywords=[2]{  // Métodos comunes
+		then, catch, finally, map, filter, reduce, forEach, find, includes,
+		toString, valueOf, hasOwnProperty, toFixed, toUpperCase, toLowerCase,
+		substring, slice, split, join, push, pop, shift, unshift, splice
+	},
+	keywordstyle=\color{blue}\bfseries,
+	keywordstyle=[2]=\color{purple!80!black},
+	commentstyle=\color{green!50!black}\itshape,
+	stringstyle=\color{orange},
+	sensitive=true,
+	morestring=[b]',
+	morestring=[b]",
+	morestring=[b]`,
+	literate=
+	{á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+	{Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+	{ñ}{{\~n}}1 {Ñ}{{\~N}}1
+	{¡}{{!`}}1  % Exclamación española
+	{¿}{{?`}}1  % Interrogación española
+	{»}{{\guillemotright}}1
+	{«}{{\guillemotleft}}1
+	{…}{{\dots}}1  % Operador spread
+	{=>}{{$\Rightarrow$}}2, % Arrow function
+	inputencoding=utf8,
+	extendedchars=true,
+	upquote=true,
+	showstringspaces=false,
+	tabsize=2,
+	emph={document, window, event, arguments},  % Objetos globales
+	emphstyle=\color{red!70!black},
+	alsoletter={$, _}  % Para variables como $jQuery o _lodash
+}
+
+% Mapeo de lenguajes
+\lstset{
+    language=java, % Por defecto
+    style=basestyle
+}
+
+% Comandos rápidos
+\newcommand{\javacode}[1]{\lstinline[language=java]!#1!}
+\newcommand{\pycode}[1]{\lstinline[language=python]!#1!}
+\newcommand{\sqlcode}[1]{\lstinline[language=sql]!#1!}
+\newcommand{\bashcode}[1]{\lstinline[language=bash]!#1!}
+\newcommand{\jscode}[1]{\lstinline[language=js]!#1!}
+
+\endinput

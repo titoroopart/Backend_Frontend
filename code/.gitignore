@@ -1,0 +1,50 @@
+# ----------------------------
+# Ignorar configuraciones de IDEs (global)
+# ----------------------------
+**/.idea/
+**/.vscode/
+**/.settings/
+**/*.iml
+**/.project
+**/.classpath
+**/.nb-gradle/
+
+# ----------------------------
+# Builds y dependencias (Gradle/Maven)
+# ----------------------------
+**/build/
+**/target/
+**/out/
+**/.gradle/
+**/gradle-app.setting
+!**/gradle-wrapper.jar  # Excepción: el wrapper sí debe incluirse
+**/bin/
+**/libs/
+**/*.jar
+**/*.war
+
+# ----------------------------
+# Archivos generados y temporales
+# ----------------------------
+**/*.class
+**/*.log
+**/logs/
+**/*.tmp
+**/*~
+**/npm-debug.log*
+**/.DS_Store
+**/Thumbs.db
+
+# ----------------------------
+# Archivos de entorno y configuración local
+# ----------------------------
+**/.env
+**/*.env
+**/local.properties
+**/config/local/
+
+# ----------------------------
+# Excepciones importantes (no ignorar)
+# ----------------------------
+!**/gradle/wrapper/gradle-wrapper.jar  # Asegurar que el wrapper de Gradle se incluya
+!**/src/  # Asegurar que el código fuente nunca se ignore
