@@ -39,6 +39,8 @@ public class ApiConnection {
 \end{lstlisting}
 Con import importamos todas las librerías necesarias, luego con .Builder() a la hora de crear el objeto iniciamos el patrón de diseño builder para construir el objeto retrofit, los .baseUrl() y .addConverterFactory() son parámetros necesarios para construir el objeto y por ultimo .build() es la orden que construye el objeto retrofit.
 \\
+El metodo .addConverterFactory es importante para poder manejar el objeto serializado y desealizarlo en un string json etc.
+\\
 Para poder generar el request es necesario usar una interface para el endpoint, esta interfase sera capas de manejar las peticiones get, post, put, delete etc y recibir variables si así lo requiere ej endpoint random:
 \begin{lstlisting}[language=java]
 import retrofit2.http.GET;
@@ -60,3 +62,4 @@ import retrofit2.Call;
       Call<String> getPost(@Path("id") int id); // Retorna String en lugar de objeto
   }
 \end{lstlisting}
+

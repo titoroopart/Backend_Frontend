@@ -1,4 +1,5 @@
 import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
@@ -9,7 +10,7 @@ public class ApiProduct {
   public static void connection(){
     Retrofit retro = new Retrofit.Builder()
       .baseUrl("https://api.chucknorris.io/jokes/")
-      .addConverterFactory(ScalarsConverterFactory.create())
+      .addConverterFactory(ScalarsConverterFactory.create()) // Usamos String en lugar de JSON
       .build();
 
     getConnection apiRequest = retro.create(getConnection.class);
@@ -18,9 +19,8 @@ public class ApiProduct {
       String response = apiRequest.getPost().execute().body();
       System.out.println(response);
     } catch (IOException e) {
+      //TODO: handle exception
       System.out.println("Error de conexion");
-    } finally {
-      System.exit(0);
     }
   }
 
