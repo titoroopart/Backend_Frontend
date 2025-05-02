@@ -1,0 +1,65 @@
+\section{[Code02] APIconsumer con java + gradle + Retrofit}
+
+Una API (Aplication Programming Interface) es un una interfase que permitirá a los programas comunicarse compartiendo las funcionalidades, datos, etc. Esto facilita a los desarrolladores a disponer de muchas herramientas y base de datos disponibles y usarlos en sus aplicaciones ya sea conectándose a sus propios servidores o a servidores de terceros.
+\\
+Un ApiConsumer sera esa parte del código que nos permitirá conectarnos a una API del lado del servidor.\\
+Para crear un API consumer necesitaremos lo siguiente:
+\begin{enumerate}
+  \item Elegir un lenguaje de programación en este caso Java21
+  \item Una librería, En el caso de Java retrofit
+  \item Configurar los http methods get, post, put, delete
+  \item Agregar content type Authorization
+  \item Definir el body en el caso de los métodos post put y delete
+  \item Manejar la respuesta o el error de la petición
+\end{enumerate}
+En el caso de Java21 trabajaremos con la librería retrofit, para agregar esta libreria a un poryecto gradle groovy simplemente agregamos la dependencia a build.gradle
+
+\begin{lstlisting}[language=java]
+dependencies {
+  \\ otras dependencias
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.9.0'
+}
+\end{lstlisting}
+Construimos un objeto retrofit basado en la siguiente documentación \url{https://square.github.io/retrofit/2.x/retrofit/}
+\begin{lstlisting}[language=java]
+// archivo app/src/main/java/ApiConnection.java
+import retrofit2.Retrofit;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
+
+public class ApiConnection {
+
+  public static void connection(){
+    Retrofit retrofit = new Retrofit.Builder()
+      .baseUrl("https://api.example.com/")
+      .addConverterFactory(ScalarsConverterFactory.create())
+      .build();
+  }
+}
+\end{lstlisting}
+Con import importamos todas las librerías necesarias, luego con .Builder() a la hora de crear el objeto iniciamos el patrón de diseño builder para construir el objeto retrofit, los .baseUrl() y .addConverterFactory() son parámetros necesarios para construir el objeto y por ultimo .build() es la orden que construye el objeto retrofit.
+\\
+El metodo .addConverterFactory es importante para poder manejar el objeto serializado y desealizarlo en un string json etc.
+\\
+Para poder generar el request es necesario usar una interface para el endpoint, esta interfase sera capas de manejar las peticiones get, post, put, delete etc y recibir variables si así lo requiere ej endpoint random:
+\begin{lstlisting}[language=java]
+import retrofit2.http.GET;
+import retrofit2.Call;
+
+  public interface getConnection {
+    @GET("random")
+    Call<String> getPost();
+}
+\end{lstlisting}
+Ejemplo interface con parámetro id en el endpoint.
+\begin{lstlisting}[language=java]
+import retrofit2.http.GET;
+import retrofit2.http.Path;
+import retrofit2.Call;
+
+  private interface GetList {
+      @GET("posts/{id}")
+      Call<String> getPost(@Path("id") int id); // Retorna String en lugar de objeto
+  }
+\end{lstlisting}
+
